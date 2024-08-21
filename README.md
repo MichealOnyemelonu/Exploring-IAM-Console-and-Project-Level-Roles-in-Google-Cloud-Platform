@@ -36,3 +36,26 @@ This repository contains a project focused on exploring Identity and Access Mana
 
 This project showcases the ability to manage IAM roles within Google Cloud Platform, which is essential for cloud security and administration roles.
 
+# Task 1: Explore the IAM Console and Project-Level Roles
+
+## Steps Taken
+
+1. **Accessing the IAM Console**
+   - Navigated to the IAM & Admin section in GCP Console.
+   - Explored roles: Viewer, Editor, Owner.
+   - Documented the permissions associated with each role.
+
+2. **Role Assignment and Permissions**
+   - Assigned Viewer role to Username 2.
+   - Verified that Username 2 could only view resources, not modify them.
+
+## Observations
+
+- **Viewer Role**: Allows read-only access.
+- **Editor Role**: Allows modification of existing resources.
+- **Owner Role**: Full access, including billing and role management.
+
+## Screenshots
+
+- ![IAM Console](../images/iam-console.png)
+- ![Role Assignment](../images/role-assignment.png)
