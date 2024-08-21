@@ -108,4 +108,3 @@ To verify the setup:
 
 This repository demonstrates the management of IAM roles and permissions in Google Cloud, focusing on project-level roles and specific Cloud Storage access. For further details, refer to the [Google Cloud IAM documentation](https://cloud.google.com/iam/docs/overview).
 
-Feel free to explore and contribute to this project to better understand Google Cloud's access control mechanisms.
