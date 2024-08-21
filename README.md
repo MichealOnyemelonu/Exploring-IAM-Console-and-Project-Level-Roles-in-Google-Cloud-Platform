@@ -1,61 +1,111 @@
-# GCP IAM Role Exploration
+# Google Cloud IAM and Cloud Storage Project
 
-## Overview
+This repository documents tasks performed in Google Cloud IAM and Cloud Storage, including exploring IAM roles, managing Cloud Storage buckets, and configuring access permissions.
 
-This repository contains a project focused on exploring Identity and Access Management (IAM) roles in Google Cloud Platform (GCP). It demonstrates how different project-level roles, such as Viewer, Editor, and Owner, affect permissions and access to resources.
+## Table of Contents
 
-## Contents
+1. [Exploring IAM Roles](#exploring-iam-roles)
+2. [Preparing a Cloud Storage Bucket for Access Testing](#preparing-a-cloud-storage-bucket-for-access-testing)
+3. [Removing Project Access](#removing-project-access)
+4. [Adding Cloud Storage Permissions](#adding-cloud-storage-permissions)
+5. [Verification Steps](#verification-steps)
 
-- **Task 1: Explore the IAM Console and Project-Level Roles**
-  - Navigating the IAM console.
-  - Assigning roles and observing permissions.
-  
-- **Task 2: Prepare a Cloud Storage Bucket for Access Testing**
-  - Creating a Cloud Storage bucket.
-  - Testing access with different IAM roles.
-  - Revoking and verifying access.
+---
 
-## Key Learnings
+## Exploring IAM Roles
 
-- Understanding GCP IAM roles and their impact on project permissions.
-- Practical experience in managing and revoking access.
-- Security best practices in cloud environments.
+### Task 1: Explore the IAM Console and Project Level Roles
 
-## Repository Structure
+1. **Navigate to IAM Console**:
+   - Go to Navigation menu > IAM & Admin > IAM.
 
-- `README.md`: This file, providing an overview of the project.
-- `images/`: Contains screenshots related to the project (e.g., IAM console, role assignment).
-- `tasks/`: Detailed markdown files for each task, explaining the steps taken and results observed.
+2. **Grant Access**:
+   - Click the `+GRANT ACCESS` button.
+   - Scroll to the "Basic" section under Select a role.
+   - Hover over the roles: Editor, Owner, and Viewer.
 
-## How to Use
+3. **Role Definitions**:
+   - **Viewer** (`roles/viewer`): Read-only access.
+   - **Editor** (`roles/editor`): Includes Viewer permissions plus permissions to modify resources.
+   - **Owner** (`roles/owner`): Includes Editor permissions plus the ability to manage roles and permissions, and set up billing.
 
-1. **Task Documentation**: Navigate to the `tasks/` directory for detailed documentation of each task.
-2. **Screenshots**: Visual references are available in the `images/` directory.
+4. **Cancel**:
+   - Click `CANCEL` to exit the "Add principal" panel.
 
-## Conclusion
+---
 
-This project showcases the ability to manage IAM roles within Google Cloud Platform, which is essential for cloud security and administration roles.
+## Preparing a Cloud Storage Bucket for Access Testing
 
-# Task 1: Explore the IAM Console and Project-Level Roles
+### Task 2: Create a Bucket and Upload a Sample File
 
-## Steps Taken
+1. **Create a Bucket**:
+   - Navigate to Navigation menu > Cloud Storage > Buckets.
+   - Click `+CREATE`.
+   - Enter a unique name for the bucket and click `CONTINUE`.
+   - Set Location Type to "Multi-Region".
+   - Click `CREATE`.
+   - Confirm if prompted about Public access.
 
-1. **Accessing the IAM Console**
-   - Navigated to the IAM & Admin section in GCP Console.
-   - Explored roles: Viewer, Editor, Owner.
-   - Documented the permissions associated with each role.
+2. **Upload a Sample File**:
+   - Go to the Bucket Details page and click `UPLOAD FILES`.
+   - Choose a file from your computer and upload it.
+   - Rename the file to `sample.txt` by clicking on the three dots next to the file name and selecting `Rename`.
 
-2. **Role Assignment and Permissions**
-   - Assigned Viewer role to Username 2.
-   - Verified that Username 2 could only view resources, not modify them.
+3. **Verify Bucket Creation**:
+   - Confirm that the file appears in the bucket.
 
-## Observations
+---
 
-- **Viewer Role**: Allows read-only access.
-- **Editor Role**: Allows modification of existing resources.
-- **Owner Role**: Full access, including billing and role management.
+## Removing Project Access
 
-## Screenshots
+### Task 3: Remove Project Viewer for Username 2
 
-- ![IAM Console](../images/iam-console.png)
-- ![Role Assignment](../images/role-assignment.png)
+1. **Remove Access**:
+   - Navigate to IAM & Admin > IAM.
+   - Find Username 2 in the list.
+   - Click the pencil icon next to Username 2’s role.
+   - Click the trashcan icon next to the Viewer role and then `SAVE`.
+
+2. **Verify Access Removal**:
+   - Switch to Username 2 console.
+   - Navigate to Cloud Storage and attempt to access the bucket.
+   - You should see a permission error indicating that access has been revoked.
+
+---
+
+## Adding Cloud Storage Permissions
+
+### Task 4: Add Cloud Storage Permissions
+
+1. **Grant Cloud Storage Access**:
+   - Go back to Username 1 console.
+   - Navigate to IAM & Admin > IAM.
+   - Click `+GRANT ACCESS`.
+   - Enter Username 2 in the New principals field.
+   - Select `Cloud Storage > Storage Object Viewer` from the Select a role dropdown.
+   - Click `SAVE`.
+
+2. **Verify Cloud Storage Access**:
+   - Switch to Username 2 console.
+   - Open Cloud Shell and run:
+     ```sh
+     gsutil ls gs://[YOUR_BUCKET_NAME]
+     ```
+   - Replace `[YOUR_BUCKET_NAME]` with the bucket name created earlier.
+   - You should see the output with the path to `sample.txt`.
+
+---
+
+## Verification Steps
+
+To verify the setup:
+
+1. **Ensure IAM Roles**: Check that Username 2 has the correct permissions.
+2. **Cloud Storage Visibility**: Confirm that Username 2 can view the bucket and file as per the `Storage Object Viewer` role.
+3. **Access Errors**: Make sure that Username 2 receives a permission error if their access is removed.
+
+---
+
+This repository demonstrates the management of IAM roles and permissions in Google Cloud, focusing on project-level roles and specific Cloud Storage access. For further details, refer to the [Google Cloud IAM documentation](https://cloud.google.com/iam/docs/overview).
+
+Feel free to explore and contribute to this project to better understand Google Cloud's access control mechanisms.
